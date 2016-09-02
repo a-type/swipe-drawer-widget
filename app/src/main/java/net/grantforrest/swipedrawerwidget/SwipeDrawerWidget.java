@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.ListView;
 import android.widget.RemoteViews;
 
 /**
@@ -20,6 +21,12 @@ public class SwipeDrawerWidget extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.swipe_drawer_widget);
         views.setTextViewText(R.id.appwidget_text, widgetText);
+
+        // add the drawers
+        Intent intent = new Intent(context, DrawerWidgetService.class);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+        views.setRemoteAdapter(R.id.alphabetListView, intent);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -49,12 +56,6 @@ public class SwipeDrawerWidget extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
-    }
-
-    private void configureAppDrawers(Context context, int widgetId, RemoteViews rv) {
-        Intent intent = new Intent(context, DrawerWidgetService.class);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
     }
 }
 

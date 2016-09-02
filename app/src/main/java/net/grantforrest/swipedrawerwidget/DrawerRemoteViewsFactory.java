@@ -28,7 +28,7 @@ public class DrawerRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     @Override
     public void onCreate() {
         for (int i = 0; i < LETTERS.length; i++) {
-            mWidgetItems.add(new DrawerWidgetItem(LETTERS[i]));
+            mWidgetItems.add(new DrawerWidgetItem(LETTERS[i], mContext));
         }
     }
 
